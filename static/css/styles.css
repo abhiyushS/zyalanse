@@ -1,0 +1,186 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('/static/images/bg_image.png');
+    /* Fixed path */
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #333;
+}
+
+/* Header styling */
+header {
+    background-color: rgba(0, 64, 128, 0.8);
+    color: white;
+    padding: 40px 20px;
+    /* Increased padding */
+    text-align: center;
+}
+
+h1 {
+    font-size: 40px;
+    /* Increased font size */
+    margin: 0;
+}
+
+/* Info Box Styling */
+.info-box {
+    background: #e6f7ff;
+    border: 2px solid #004080;
+    padding: 30px;
+    /* Increased padding */
+    margin: 40px auto;
+    /* Increased margin */
+    width: 80%;
+    /* Adjusted width */
+    max-width: 900px;
+    /* Maximum width for larger screens */
+    border-radius: 10px;
+    text-align: left;
+    font-size: 25x;
+    /* Increased font size for readability */
+    line-height: 1.6;
+    /* Better line spacing */
+}
+
+/* Strain Selection Section */
+.strain-selection {
+    margin-top: 40px;
+    /* Increased margin-top */
+}
+
+form {
+    display: inline-block;
+    background-color: white;
+    padding: 40px;
+    /* Increased padding */
+    border-radius: 15px;
+    /* Increased border-radius */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 900px;
+    /* Maximum width for larger screens */
+}
+
+form select,
+form input {
+    padding: 12px;
+    /* Increased padding */
+    margin: 12px 0;
+    /* Increased margin */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    /* Made input and select elements full-width */
+    font-size: 16px;
+}
+
+form select {
+    background-color: #f1f1f1;
+    /* Light gray background */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+form select:hover {
+    background-color: #e6e6e6;
+    /* Slightly darker gray on hover */
+    transform: scale(1.02);
+}
+
+form select:focus {
+    outline: none;
+    border: 2px solid #004080;
+    /* Blue border on focus */
+}
+
+button {
+    background-color: #004080;
+    color: white;
+    padding: 12px 24px;
+    /* Increased padding */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color: #003060;
+}
+
+/* Flash messages styling */
+.flash-messages {
+    margin-top: 20px;
+    color: red;
+}
+
+.flash-messages ul {
+    list-style-type: none;
+    padding: 15px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    max-width: 900px;
+    /* Maximum width for large screens */
+    margin: 20px auto;
+}
+
+.flash-messages li {
+    margin: 5px 0;
+}
+
+/* Result box styling */
+.result {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: #e6f7ff;
+    border: 2px solid #004080;
+    border-radius: 10px;
+    max-width: 900px;
+    /* Maximum width for large screens */
+    margin: 40px auto;
+    font-size: 18px;
+}
+
+footer {
+    background-color: #004080;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* #f code for select dropdown button */
+#strain_name {
+    background-color: #5cb85c;
+    /* Light green */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 250px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 12px 0;
+    /* Slight margin for spacing */
+}
+
+#strain_name:focus {
+    outline: none;
+    /* Remove default focus outline */
+    border: 2px solid #004080;
+    /* Blue border on focus */
+}
+
+#strain_name:hover {
+    background-color: #4cae4c;
+    /* Darker green on hover */
+    transform: scale(1.05);
+}

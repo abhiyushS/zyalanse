@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimize Xylanase Parameters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        // Define strain-specific parameters with uppercase names
+        const strainParameters = {
+            "Trichoderma afroharzianum": [
+                "INCUBATION TIME (DAYS)", "HUMIDITY (%)", "TEMPERATURE (DEGREE C)", "INOCULUM SIZE (SPORE/G)"
+            ],
+            "Fusarium sp. BVKT": [
+                "SORBITOL (%)", "YEAST EXTRACT (%)", "pH", "TEMPERATURE (DEGREE C)", "AGITATION (RPM)"
+            ],
+            "Bacillus tequilensis": [
+                "BIRCHWOOD XYLAN (%)", "YEAST EXTRACT (%)", "TEMPERATURE (DEGREE C)", "INCUBATION PERIOD (HOURS)"
+            ],
+            "Aspergillus Niger": [
+                "SUBSTRATE CONCENTRATION (G)", "TEMPERATURE (DEGREE C)", "INITIAL pH", "INITIAL MOISTURE CONTENT (%)", "INCUBATION TIME (HRS)"
+            ],
+            "Aspergillus fumigatus": [
+                "SUBSTRATE CONCENTRATION (G)", "TEMPERATURE (DEGREE C)", "INCUBATION TIME (HRS)", "INITIAL MOISTURE CONTENT (%)", "INITIAL pH"
+            ],
+            "AUM60": [
+                "TEMPERATURE (DEGREE C)", "pH", "FERMENTATION TIME (DAYS)", "SUBSTRATE CONCENTRATION (%)", "AGITATION RATE (RPM)"
+            ],
+            "AUM64": [
+                "TEMPERATURE (DEGREE C)", "pH", "FERMENTATION TIME (DAYS)", "SUBSTRATE CONCENTRATION (%)", "AGITATION RATE (RPM)"
+            ]
+        };
+
+        function updateParameterFields() {
+            let strain = document.getElementById("strain_name").value;
+            let parameterDiv = document.getElementById("parameters");
+            parameterDiv.innerHTML = ""; // Clear previous inputs
+
+            if (strain && strainParameters[strain]) {
+                strainParameters[strain].forEach(param => {
+                    let label = document.createElement("label");
+                    label.textContent = param + " (leave empty if unknown):";
+                    let input = document.createElement("input");
+                    input.type = "number";
+                    input.name = param.replace(/\s/g, "_").toLowerCase(); // Convert to lowercase with underscores
+                    input.step = "any";
+                    parameterDiv.appendChild(label);
+                    parameterDiv.appendChild(input);
+                    parameterDiv.appendChild(document.createElement("br"));
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Optimize Xylanase Parameters</h1>
+    </header>
+
+    <!-- Add the same image from the home page -->
+    <div class="image-container">
+        <img src="{{ url_for('static', filename='images/heading_image.png') }}" alt="Xylanase Enzyme Optimization">
+    </div>
+
+    <div class="info-box">
+        <p>Enter known values and target xylanase activity. The system will optimize missing parameters.</p>
+    </div>
+
+    <div class="strain-selection">
+        <form action="{{ url_for('reverse_prediction') }}" method="post">
+            <!-- Strain Selection Dropdown -->
+            <label for="strain_name">Choose a strain:</label>
+            <select name="strain_name" id="strain_name" required onchange="updateParameterFields()">
+                <option value="" disabled selected>Select a strain</option>
+                <option value="Trichoderma afroharzianum">Trichoderma afroharzianum</option>
+                <option value="Fusarium sp. BVKT">Fusarium sp. BVKT</option>
+                <option value="Bacillus tequilensis">Bacillus tequilensis</option>
+                <option value="Aspergillus Niger">Aspergillus Niger</option>
+                <option value="Aspergillus fumigatus">Aspergillus fumigatus</option>
+                <option value="AUM60">AUM60</option>
+                <option value="AUM64">AUM64</option>
+            </select>
+
+            <!-- Target Xylanase Activity Input - Now Below Strain Dropdown -->
+            <label for="target_activity">Target Xylanase Activity:</label>
+            <input type="number" name="target_activity" step="any" required>
+
+            <!-- Dynamic Parameter Fields -->
+            <div id="parameters">
+                <!-- Dynamic input fields will be inserted here -->
+            </div>
+
+            <button type="submit">Optimize</button>
+        </form>
+    </div>
+
+    {% if optimized_params %}
+    <div class="result">
+        <h3>Optimized Parameters for {{ strain_name }}:</h3>
+        <ul>
+            {% for param, value in optimized_params.items() %}
+                <li>{{ param.upper() }}: <strong>{{ value }}</strong></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Navigation Button to Prediction Page -->
+    <div class="navigation">
+        <a href="{{ url_for('index') }}">
+            <button type="button">Go to Prediction</button>
+        </a>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Xylanase Activity Optimizer</p>
+    </footer>
+</body>
+</html>

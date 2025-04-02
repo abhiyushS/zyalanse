@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xylanase Enzyme Activity Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/heading_image.png') }}" alt="Xylanase Molecule">
+        <h1>Xylanase Enzyme Activity Predictor</h1>
+    </header>
+    
+    <div class="info-box">
+        <p>
+            Xylanase is an enzyme that breaks down xylan, a major component of plant cell walls, into simpler sugars like xylose. It plays an essential role in the processing of plant biomass for biofuel production.
+        </p>
+    </div>
+
+    <!-- Flash messages for user feedback -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="strain-selection">
+        <form action="{{ url_for('index') }}" method="post">
+            <label for="strain_name">Choose a strain:</label>
+            <select name="strain_name" id="strain_name" required>
+                <option value="" disabled selected>Select a strain</option>
+                <option value="Trichoderma afroharzianum">Trichoderma afroharzianum</option>
+                <option value="Fusarium sp. BVKT">Fusarium sp. BVKT</option>
+                <option value="Bacillus tequilensis">Bacillus tequilensis</option>
+                <option value="Aspergillus Niger">Aspergillus Niger</option>
+                <option value="Aspergillus fumigatus">Aspergillus fumigatus</option>
+                <option value="AUM60">AUM60</option>
+                <option value="AUM64">AUM64</option>
+            </select>
+
+            <!-- Dynamic form fields based on strain selection -->
+            <div id="parameters"></div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    {% if prediction is not none %}
+    <div class="result">
+        <h3>Predicted Xylanase Activity for {{ strain_name }}:</h3>
+        <p><strong>{{ prediction }}</strong></p>
+    </div>
+    {% endif %}
+
+    <!-- Navigation Button to Reverse Prediction Page -->
+    <div class="navigation">
+        <a href="{{ url_for('reverse_prediction') }}">
+            <button type="button">Go to Reverse Prediction</button>
+        </a>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Xylanase Activity Predictor</p>
+    </footer>
+
+    <script>
+        document.getElementById('strain_name').addEventListener('change', function() {
+            var strain = this.value;
+            var parametersDiv = document.getElementById('parameters');
+            parametersDiv.innerHTML = '';
+
+            let strainParams = {
+                "Trichoderma afroharzianum": [
+                    "INCUBATION TIME (DAYS)",
+                    "HUMIDITY (%)",
+                    "TEMPERATURE (degree C)",
+                    "INOCULUM SIZE (spore/g)"
+                ],
+                "Fusarium sp. BVKT": [
+                    "SORBITOL (%)",
+                    "YEAST EXTRACT (%)",
+                    "pH",
+                    "TEMPERATURE (degree C)",
+                    "AGITATION (rpm)"
+                ],
+                "Bacillus tequilensis": [
+                    "BIRCHWOOD XYLAN (%)",
+                    "YEAST EXTRACT (%)",
+                    "TEMPERATURE (degree C)",
+                    "INCUBATION PERIOD (hours)"
+                ],
+                "Aspergillus Niger": [
+                    "SUBSTRATE CONCENTRATION (g)",
+                    "TEMPERATURE (degree C)",
+                    "INITIAL pH",
+                    "INITIAL MOISTURE CONTENT (%)",
+                    "INCUBATION TIME (hrs)"
+                ],
+                "Aspergillus fumigatus": [
+                    "SUBSTRATE CONCENTRATION (g)",
+                    "TEMPERATURE (degree C)",
+                    "INCUBATION TIME (hrs)",
+                    "INITIAL MOISTURE CONTENT (%)",
+                    "INITIAL pH"
+                ],
+                "AUM60": [
+                    "TEMPERATURE (degree C)",
+                    "pH",
+                    "FERMENTATION TIME (DAYS)",
+                    "SUBSTRATE CONCENTRATION (%)",
+                    "AGITATION RATE (rpm)"
+                ],
+                "AUM64": [
+                    "TEMPERATURE (degree C)",
+                    "pH",
+                    "FERMENTATION TIME (DAYS)",
+                    "SUBSTRATE CONCENTRATION (%)",
+                    "AGITATION RATE (rpm)"
+                ]
+            };
+
+            if (strainParams[strain]) {
+                strainParams[strain].forEach(param => {
+                    parametersDiv.innerHTML += `
+                        <label for="${param}">${param}:</label>
+                        <input type="number" name="${param}" step="any" required><br>
+                    `;
+                });
+            }
+        });
+
+        document.getElementById('strain_name').dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>
