@@ -1,113 +1,3 @@
-# import pickle
-# import numpy as np
-# from flask import Flask, render_template, request, flash
-
-# # Load models and scalers for each strain
-# models = {
-#     "Trichoderma afroharzianum": pickle.load(open("models/gradient_boosting_model1.pkl", "rb")),
-#     "Fusarium sp. BVKT": pickle.load(open("models/gradient_boosting_model2.pkl", "rb")),
-#     "Bacillus tequilensis": pickle.load(open("models/random_forest_model3.pkl", "rb")),
-#     "Aspergillus Niger": pickle.load(open("models/xgboost_model5.pkl", "rb")),
-#     "AUM60": pickle.load(open("models/random_forest_model60.pkl", "rb")),
-#     "AUM64": pickle.load(open("models/random_forest_model64.pkl", "rb")),
-# }
-
-# scalers = {
-#     "Trichoderma afroharzianum": pickle.load(open("scalers/scaler1.pkl", "rb")),
-#     "Fusarium sp. BVKT": pickle.load(open("scalers/scaler2.pkl", "rb")),
-#     "Bacillus tequilensis": pickle.load(open("scalers/scaler3.pkl", "rb")),
-#     "Aspergillus Niger": pickle.load(open("scalers/scaler5.pkl", "rb")),
-#     "AUM60": pickle.load(open("scalers/scaler60.pkl", "rb")),
-#     "AUM64": pickle.load(open("scalers/scaler64.pkl", "rb")),
-# }
-
-# app = Flask(__name__)
-# app.secret_key = "your_secret_key"  # Needed for flash messages
-
-# @app.route("/", methods=["GET", "POST"])
-# def index():
-#     if request.method == "POST":
-#         strain_name = request.form.get("strain_name")
-        
-#         if not strain_name:
-#             flash("Please select a strain.", "error")
-#             return render_template("index.html")
-
-#         try:
-#             # Get the parameters from the form based on strain selected
-#             if strain_name == "Trichoderma afroharzianum":
-#                 parameters = [
-#                     float(request.form["incubation_time"]),
-#                     float(request.form["humidity"]),
-#                     float(request.form["temperature"]),
-#                     float(request.form["inoculum_size"]),
-#                 ]
-#             elif strain_name == "Fusarium sp. BVKT":
-#                 parameters = [
-#                     float(request.form["sorbitol"]),
-#                     float(request.form["yeast_extract"]),
-#                     float(request.form["pH"]),
-#                     float(request.form["temperature"]),
-#                     float(request.form["agitation"]),
-#                 ]
-#             elif strain_name == "Bacillus tequilensis":
-#                 parameters = [
-#                     float(request.form["birchwood_xylan"]),
-#                     float(request.form["yeast_extract"]),
-#                     float(request.form["temperature"]),
-#                     float(request.form["incubation_period"]),
-#                 ]
-#             elif strain_name == "Aspergillus Niger":
-#                 parameters = [
-#                     float(request.form["substrate_concentration"]),
-#                     float(request.form["temperature"]),
-#                     float(request.form["initial_pH"]),
-#                     float(request.form["initial_moisture_content"]),
-#                     float(request.form["incubation_time"]),
-#                 ]
-#             elif strain_name == "AUM60":
-#                 parameters = [
-#                     float(request.form["temperature"]),
-#                     float(request.form["pH"]),
-#                     float(request.form["fermentation_time"]),
-#                     float(request.form["substrate_concentration"]),
-#                     float(request.form["agitation_rate"]),
-#                 ]
-#             elif strain_name == "AUM64":
-#                 parameters = [
-#                     float(request.form["temperature"]),
-#                     float(request.form["pH"]),
-#                     float(request.form["fermentation_time"]),
-#                     float(request.form["substrate_concentration"]),
-#                     float(request.form["agitation_rate"]),
-#                 ]
-#             else:
-#                 flash("Invalid strain selected.", "error")
-#                 return render_template("index.html")
-            
-#             # Use the appropriate scaler and model for the selected strain
-#             scaler = scalers[strain_name]
-#             model = models[strain_name]
-            
-#             # Scale input parameters
-#             scaled_params = scaler.transform([parameters])
-            
-#             # Make prediction using the selected model
-#             prediction = model.predict(scaled_params)
-            
-#             return render_template("index.html", prediction=round(prediction[0], 2), strain_name=strain_name)
-        
-#         except ValueError as e:
-#             flash(f"Error processing form inputs: {e}", "error")
-#             return render_template("index.html")
-#         except KeyError as e:
-#             flash(f"Model or scaler not found for {strain_name}.", "error")
-#             return render_template("index.html")
-    
-#     return render_template("index.html")
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
 
 
 import pickle
@@ -118,7 +8,7 @@ from flask import Flask, render_template, request, flash
 from sklearn.preprocessing import StandardScaler
 import os
 
-# Function to safely load models and scalers
+
 def load_models_and_scalers():
     models = {}
     scalers = {}
@@ -189,8 +79,7 @@ column_mapping = {
 
 }
 
-# Define strain-specific parameters
-# Define strain-specific parameters with exact case-sensitive names
+
 strain_parameters = {
     "Trichoderma afroharzianum": [
         "INCUBATION TIME (DAYS)",
