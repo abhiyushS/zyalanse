@@ -270,5 +270,4 @@ def reverse_prediction():
 
     return render_template("reverse.html")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+
