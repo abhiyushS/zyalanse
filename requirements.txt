@@ -1,6 +1,13 @@
+# Flask==2.2.2
+# numpy==1.26.4
+# pandas==2.0.3
+# scikit-learn==1.4.2
+# scipy==1.11.4
+# gunicorn==21.2.0  # Optional: Add if deploying on Render or Heroku
+
 Flask==2.2.2
 numpy==1.26.4
 pandas==2.0.3
 scikit-learn==1.4.2
 scipy==1.11.4
-gunicorn==21.2.0  # Optional: Add if deploying on Render or Heroku
+gunicorn==21.2.0  # Required for production hosting with Flask
